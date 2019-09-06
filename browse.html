@@ -1,0 +1,123 @@
+<?php
+// ----- begin edit -----
+$title = 'Browse Images';
+// ----- end edit -----
+
+require('php/common.php');
+require_once('php/custom.php');
+require_once('php/search.php');
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles/style.css" />
+    <style>
+        div.title { display: block; color: #000080; }
+        .caption { display: block; }
+        .countselector {
+            width: 90px; 
+            margin-bottom: 0.2em; 
+            padding: 0; 
+            float: right; 
+            /*border: 1px dotted gray;*/
+        }
+        .list-group-item { padding: 0; }    /* tighten list of "number of images" selection */
+        .list-group-item.active {
+            color: white !important;
+            background-color: #337ab7;
+        }
+        .list-group-item.active a { color: white; }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once('php/sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+<?php 
+    // Read our XML image database here, so we know how many images are available
+    require_once('php/image-database.php'); // for readImageDatabase()
+    $imglist = readImageDatabase( $imageDatabaseBasename );
+
+    $total_photo_library_size = count($imglist);
+
+    if (empty($total_photo_library_size)) { 
+        showError("Internal error: No images are available in spite your really quite reasonable expectations. Contact the webmaster.", __FILE__, __LINE__);
+    }
+?>
+
+    <div class="countselector">
+        <ul class="listgroup">
+<?php 
+    // Offer choice of how many images to display
+    // Note: this comes from URL parameters
+    $allowed_counts = array(25, 100, 500, 1000);
+    $random_image_count = getCleanGET('count', $allowed_counts[0]); // default to lowest number
+    $random_image_count = min($random_image_count, $total_photo_library_size);
+    //echo "<!-- random_image_count = $random_image_count -->".PHP_EOL;   // debug
+
+    // Display box to select number of images shown
+    foreach ($allowed_counts as $count) {
+        $active = ($count == $random_image_count) ? ' active' : '';
+        echo "$indent  <li class=\"list-group-item$active\"><a href=\"?count=$count\">$count</a></li>".PHP_EOL;
+    }
+?>
+        </ul>
+    </div>
+
+    <!-- main content -->
+    <div class="container-fluid bg-3 text-left">
+        <div class="row">
+            <h1 id="header-text">
+                <?php echo $title; ?> <span class="glyphicon glyphicon-picture"></span>
+            </h1>
+            <p>Shown below are
+                <?php echo $random_image_count; ?> random images
+                out of <?php echo number_format($total_photo_library_size); ?>.
+                Refresh this page for new random images. Enjoy!</p>
+        </div><!-- end .row -->
+        <div class="row text-center">
+<?php
+    // randomize images and show the first few
+    //echo '<pre>BEFORE: $imglist = '; var_dump($imglist); echo '</pre>'.PHP_EOL; // debug
+    $randomImageList = shuffle_with_keys($imglist, $random_image_count);
+    //echo "<br/><pre>AFTER: $randomImageList() for $random_image_count items = "; var_dump($randomImageList); echo '</pre>'.PHP_EOL; // debug
+
+    showSearchResultThumbnails($randomImageList, $indent);
+?>
+        </div><!-- end .row -->
+    </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+  </body>
+</html>

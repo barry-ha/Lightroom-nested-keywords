@@ -1,0 +1,187 @@
+<?php
+// ----- begin edit -----
+$title = 'Build Database of Hierarchical Keywords';
+// ----- end edit -----
+
+require('../php/common.php');
+require_once('../php/custom.php');
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <style>
+        .statistics li { padding-bottom: 0.3em; }
+        td { vertical-align: top; }
+        .skiplist { width: 10em; }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once($path2php.'sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="container-fluid bg-3 text-left">
+        <h1 id="header-text">
+		  <?php echo $title; ?></h1>
+        <div class="skiplist">
+          Skip down to:
+		  <br/><a href="#image_database">Image Database</a>
+          <br/><a href="#keyword_to_files">Keyword-to-Files</a>
+          <br/><a href="#keyword_tree">Keyword Tree</a>
+          <br/><a href="#autocomplete">Autocomplete List</a>
+      </div>
+        <p><b>Webmaster:</b> This is an administrative function and should be hidden from the 
+            public. For example, you might password-protect the "admin" folder.</p>
+        <p><b>Archivist:</b> Examine this page to confirm that your keywords
+            were recognized as expected, and look for warnings and error messages.</p>
+        <p>This page scans all the image files, extracts the hierarchical keywords
+            from IPTC metadata, and creates the database used by all other features in 
+            the website. The data does not need to be refreshed again until the photos 
+            are changed.</p>
+        <p>By opening this page, you have caused the web server to refresh 
+            all of its hierarchical keyword index files.</p>
+        <br/>
+    
+        <table class="table-condensed table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <b>Input Files</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">Image Folders:</td>
+                    <td>
+                        <b><?php echo $myLargeImageFolder; ?></b>
+                        <br/><b><?php echo $mySmallImageFolder; ?></b>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <b>Output Files</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">Image Database:</td>
+                    <td><b><?php echo $imageDatabaseBasename; ?></b></td>
+                    <td>Image Database: 
+                        <a href="/<?php echo $imageDatabaseBasename.'.xml'; ?>" target="_blank">XML</a>
+                        <a href="/<?php echo $imageDatabaseBasename.'.php'; ?>" target="_blank">PHP</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">Keyword-to-Images:</td>
+                    <td><b><?php echo $keywordFlatBasename; ?></b></td>
+                    <td>Keyword-to-Filename Database:
+                        <a href="/<?php echo $keywordFlatBasename.'.xml'; ?>" target="_blank">XML</a>
+                        <a href="/<?php echo $keywordFlatBasename.'.php'; ?>" target="_blank">PHP</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">&nbsp;Hierarchical Keywords:</td>
+                    <td><b><?php echo $keywordTreeBasename; ?></b></td>
+                    <td>Keyword Hierarchy Tree:
+                        <a href="/<?php echo $keywordTreeBasename.'.xml'; ?>" target="_blank">XML</a>
+                        <a href="/<?php echo $keywordTreeBasename.'.php'; ?>" target="_blank">PHP</a>
+                        <br/><a href="/keywords.html">Keyword index <span class="glyphicon glyphicon-th-list"></span></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right">Autocomplete List:</td>
+                    <td><b><?php echo $autocompleteFilename; ?></b></td>
+                    <td>Javascript Data: 
+                        <a href="/<?php echo $autocompleteFilename; ?>" target="_blank">JS</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+<?php 
+    // check file permissions, in case this is Linux 
+    // and tell the webmaster if there's a problem with the server files we're about to update
+    checkFileWrite("$imageDatabaseBasename.xml", __FILE__, __LINE__);
+    checkFileWrite("$imageDatabaseBasename.php", __FILE__, __LINE__);
+    checkFileWrite("$keywordTreeBasename.xml",  __FILE__, __LINE__);
+    checkFileWrite("$keywordTreeBasename.php", __FILE__, __LINE__);
+    checkFileWrite("$keywordFlatBasename.xml", __FILE__, __LINE__);
+    checkFileWrite("$keywordFlatBasename.php", __FILE__, __LINE__);
+    checkFileWrite("$autocompleteFilename", __FILE__, __LINE__);
+
+    // figure out the work list 
+    $file_list = getListOfImages($myLargeImageFolder);     // from common.php
+?>
+    <h3 id="image_database">Image Database (<?php echo number_format(count($file_list)); ?> photos)</h3>
+    <p>This step reads all the image files, finds the titles and captions, and stores
+        the data in an image database for easy retrieval.</p>
+<?php
+    showImageStatistics($file_list);
+
+    require_once($path2php.'image-database.php');
+    $image_db = buildImageDatabase($myLargeImageFolder, $file_list);    // image database (contains image filenames, titles, captions)
+    writeImageDatabase( $image_db, $imageDatabaseBasename);
+?>
+    <h3 id="keyword_to_files">Keyword-to-Files Database (<?php echo number_format(count($file_list)); ?> photos)</h3>
+    <p>This step reads all the image files again, gets their Lightroom keywords, and creates a look-up
+        table from keyword =&gt; list of file names.</p>
+<?php
+
+    require_once($path2php.'keyword-database.php');
+    $keyword_to_files = buildKeywordToFilesDatabase($myLargeImageFolder, $file_list, $outputflatfile);  // keyword-to-file-list database
+
+    showKeywordFlatStatistics($keyword_to_files);
+    writeKeywordFlatDatabase( $keyword_to_files, $keywordFlatBasename );
+?>
+    <h3 id="keyword_tree">Keyword Tree Database (<?php echo number_format(count($file_list)); ?> photos)</h3>
+    <p>This step reads all the image files once again, and creates the entire hierarchical 
+        keyword tree that is available in Lightroom.</p>
+<?php
+    $database = buildKeywordTreeDatabase( $myLargeImageFolder, $file_list, $outputfile );   // keyword database (contains hierarchical keyword tree)
+    showKeywordTreeStatistics( $database );
+    writeTreeDatabase( $database, $keywordTreeBasename );
+?>
+    <h3 id="autocomplete">Save Autocomplete Keyword List</h3>
+    <p>This step writes a list of keywords into a <a href="/<?php echo $autocompleteFilename; ?>" target="_blank">JavaScript file</a> 
+        for the "autocomplete keyword lookup" feature in <?php printf('<a href="/%s">%s</a>', $searchPage, $searchPage) ?>.</p>
+<?php
+    // we need the list of keywords as a javascript file
+    // this will assist the "autocomplete keyword lookup" feature in search.html 
+    saveAutocompleteJavascript( $keyword_to_files, $path2root, $autocompleteFilename );
+
+?>
+  </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+</body>
+</html>

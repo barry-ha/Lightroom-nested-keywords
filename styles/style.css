@@ -1,0 +1,129 @@
+/* File:    style.css
+ * Website: www.NestedKeywords.com 
+ * Author:  Barry Hansen, barry@electromagneticsoftware.com
+ * Written: September 5, 2019
+ */
+body
+{
+    padding: 20px 40px;
+    overflow-y: scroll;
+}
+
+/* ---------- header ---------- */
+.jumbotron {
+    text-align: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-bottom: 0;
+}
+.jumbotron h1 {
+    font-size: 48px;
+}
+.navbar {
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    margin-bottom: 0;
+    border-radius: 0;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+#navigation {
+    color: white;
+    background: #6d2f1b;
+}
+.navbar-nav li a {
+    color: white !important;
+}
+.navbar-nav .open a {
+    color: black !important;
+}
+#navigation ul.nav > li a:hover,
+#navigation ul.nav li.current_page_item a,
+#navigation ul.nav li.current-menu-item a {
+    color: black !important;
+    background-color: #f1d7ae !important;
+}
+
+/* ---------- body ---------- */
+h4 {
+    margin-top: 1em;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+hr {
+    border-top: 1px solid #888; /* same as border in footer */
+}
+.item {
+    display: inline-block;
+    margin: 10px;
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.oneimage {
+    /* container for each thumbnail in the Search Results page */
+    display: inline-block;
+    width: 160px;   /* must match width of all thumbnails */
+    margin-bottom: 12px;
+    height: auto;
+    text-align: center;
+}
+.skiplist {
+    width: 8em; 
+    padding-left: 1em; 
+    margin-left: 0.7em; 
+    text-align: left; 
+    float: right; 
+    border: 1px solid #6d2f1b;
+}
+
+/* ---------- search.html ---------- */
+label {
+    /* otherwise "less.css" makes it bold */
+    font-weight: normal;
+}
+legend {
+    /* or else "less.css:24" makes it large font */
+}
+
+/* ---------- detail-1.html --------- */
+.row-of-keys {
+    margin-bottom: 0.9em;
+}
+.row-of-keys button {
+    margin-bottom: 4px;
+    background-color: #fdf6da !important;
+    border: 1px solid #444;
+    border-radius: 7px;
+}
+.row-of-keys .btn-primary {
+    margin-bottom: 4px;
+    padding: 0px 6px;
+    color: #337ab7;
+    background-color: #fdf6da;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+/* ---------- keywords.html ---------- */
+/* this html page requires a space-saving <ul> */
+.keywordindex ul {
+    margin-bottom: 0.8em;
+    margin-left: 1.1em;
+    padding: 0;
+}
+
+/* ---------- footer ---------- */
+footer {
+    border-top: 1px solid #888; /* same as border in <hr> */
+    background-color: white;
+    padding-top: 1em;
+    margin-top: 1.5em;
+}
+address {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+

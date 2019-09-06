@@ -1,0 +1,128 @@
+<?php
+// ----- begin edit -----
+$title = 'Photo Gallery';
+$random_image_count = 5;
+// ----- end edit -----
+
+require('php/common.php');
+require_once('php/custom.php');
+require_once('php/search.php');
+$latest_photo_library_update = $mySiteUpdate;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+</head>
+
+<body class="text-left">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once($path2php.'sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+
+<?php 
+    // Read our XML image database here, so we know how many images are available
+    require_once('php/image-database.php'); // for readImageDatabase()
+    $imglist = readImageDatabase( $imageDatabaseBasename );
+
+    $total_photo_library_size = count($imglist);
+
+    if (empty($total_photo_library_size)) { 
+        showError("Internal error: No images are available in spite of all evidence to the contrary.", __FILE__, __LINE__);
+    }
+?>
+
+    <!-- main content -->
+    <div class="container-fluid bg-3 text-left">
+        <div class="row">
+            <h1 id="header-text">
+                <?php echo $title; ?> <span class="glyphicon glyphicon-picture"></span>
+            </h1>
+            <p>This is the demonstration website of the Github project 
+                <b><a href="https://github.com/barry-ha/Lightoom-nested-keywords" target="_blank">Lightroom-nested-keywords</b></a>.</p>
+            <p>Click on <a href="search.html">Photo Finder</a> 
+                and enter keywords in the Keyword boxes, or type such things as proper names in the Text box. 
+                Just looking around for fun?  Use <a href="browse.html">Browse Images</a> 
+                to see pages of random photos.  Click on an image for larger view and for photo details.
+                Our structured list of keywords is found in the 
+                <a href="keywords.html">Keyword Index</a>.
+            </p>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="search.html">Photo Finder&nbsp;<span class="glyphicon glyphicon-search"></span></a> 
+            </div>
+            <div class="col-sm-10">
+                to start searching
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="browse.html">Browse Images&nbsp;<span class="glyphicon glyphicon-picture"></span></a>
+            </div>
+            <div class="col-sm-10">
+                to wander around
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="keywords.html">Keyword Index&nbsp;<span class="glyphicon glyphicon-tags"></span></a>
+            </div>
+            <div class="col-sm-10">
+                to see keyword tags
+            </div>
+        </div>
+        <div class="row">
+            <br/>
+            <p>As of <?php echo $latest_photo_library_update; ?>,
+                we have <?php echo number_format($total_photo_library_size); ?> photos
+                online.
+        </div>
+
+        <div class="row">
+            <h2>Random Images Just for Fun</h2>
+            <p>Shown below are
+                <?php echo $random_image_count; ?> random images
+                out of <?php echo number_format($total_photo_library_size); ?>.
+                Refresh this page for new random images. Enjoy!</p>
+<?php
+    // randomize images and show the first few
+    $randomImageList = shuffle_with_keys($imglist, $random_image_count);
+
+    showSearchResultThumbnails($randomImageList, $indent);
+?>
+        </div><!-- end .row -->
+    </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+  </body>
+</html>

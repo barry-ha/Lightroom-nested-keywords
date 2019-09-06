@@ -1,0 +1,158 @@
+<?php
+
+require('php/common.php');
+require_once('php/custom.php');
+require_once('php/keywords.php');  // for displaying keywords as HTML
+$indent = '              ';
+
+// ----- URL parameters -----
+$filename = getCleanGET(file, '(no file specified)');
+$urlFilename = rawurlencode($filename); // note: use 'rawurlencode' to replace spaces with '%20' for valid URL
+$uKey = getCleanGET('key');
+$uKey1 = getCleanGET('key1', $uKey);  // synonym "key" and "key1"
+$uKey2 = getCleanGET('key2');
+$uKey3 = getCleanGET('key3');
+
+// fix double quotes, which somehow somewhere arrive escaped, which later causes problems to our Search function
+// if a URL contains ?text="ronald+school"
+// then we receive   text=\"ronald+school\"
+// so this code removes the backslash
+// and finally use   text="ronald school"
+$searchText = getCleanGET('text');
+//echo "<!-- common.php[".__LINE__."] \$searchText = "; var_dump($searchText); echo " -->".PHP_EOL;  // debug
+$searchText = str_replace( '\"', '"', $searchText);
+//echo "<!-- common.php[".__LINE__."] \$searchText = "; var_dump($searchText); echo " -->".PHP_EOL;  // debug
+
+$searchKeys = array();
+if (!empty($uKey1)) { $searchKeys[1] = ucfirst($uKey1); }
+if (!empty($uKey2)) { $searchKeys[2] = ucfirst($uKey2); }
+if (!empty($uKey3)) { $searchKeys[3] = ucfirst($uKey3); }
+//echo "\$searchKeys = "; var_dump($searchKeys); echo PHP_EOL;  // debug
+
+// ----- error checking -----
+$fqname = $myLargeImageFolder.'/'.$filename;  // require forward-slash for Linux (also works on Windows)
+$imageid = basename($fqname, '.jpg');
+//echo "Image filename = [$fqname]".PHP_EOL;  // debug
+if (!file_exists($fqname)) {
+  echo "<p class=\"error\">Image '$fqname' was not found on disk. [".__LINE__."]</p>".PHP_EOL;
+}
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $imageid; ?> Photo Detail</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Photo detail for <?php echo $imageid; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <style>
+        .common-page-title { display: none; /* hidden - the image's title line should be the visual focus */ }
+        ul.pager { display: none; /* hidden -  prev/next pagination is not implemented as of 8-25-2019 */ }
+        p.sequencer { display: none; /* hidden - not implemented as of 8-25-2019 */ }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once($path2php.'sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li><a href="/search.html">Photo Finder</a></li>
+                <li aria-current="page"><?php echo $imageid; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+  <div id="top" class="container-fluid bg-3 text-center">
+<?php 
+// ----- examine image -----
+    if (!file_exists($fqname)) {
+      $cwd = getcwd();
+      showError("Image '$fqname' was not found on disk."
+              ." (<a href=\"$fqname\">here</a>)",
+              __FILE__, __LINE__);
+    }
+
+    require_once($path2php.'image-database.php'); // for readImageDatabase()
+    $imglist = readImageDatabase( $imageDatabaseBasename );
+    $title = $imglist[$filename]['title'];
+    $caption = $imglist[$filename]['caption'];
+    
+    $imageDimensions = getimagesize($fqname);
+    $dimensions = $imageDimensions[0].' x '.$imageDimensions[1];
+    $filesize = number_format( filesize($fqname) );
+
+    $imageKeywords = getImageMetadata($fqname);
+
+    require_once($path2php.'adobe-xmp-for-php.php');
+    $adobePHP =& adobeXMPforPHP::get_instance();
+    $image_xmp = $adobePHP->get_xmp( $fqname );
+
+    //$adobePHP->dump_xmp($image_xmp); // debug
+   
+?>
+    <h2 class="common-page-title">Photo detail for <?php echo $filename; ?></h2>
+    <h3><?php echo $title; ?></h3>
+    <?php if (!empty($caption) && ($caption != NO_CAPTION)) { echo "<p>$caption</p>".PHP_EOL; } ?>
+    <div class="row">
+      <div class="col-sm-5">
+        <a href="photos/large/<?php echo $urlFilename; ?>">
+          <img src="photos/large/<?php echo $urlFilename; ?>" class="img-responsive" style="width:100%" 
+              alt="<?php echo $title; ?>"
+              title="<?php echo $title;?>" />
+        </a>
+        <p><?php echo $imageid; ?></p><!-- edit id -->
+        <ul class="pager">
+          <li class="previous"><a href="<?php echo $prevpage; ?>">Previous</a></li><!-- edit prev -->
+          <li class="next"><a href="<?php echo $nextpage; ?>">Next</a></li><!-- edit next -->
+        </ul>
+      </div>
+      <div class="col-sm-7 text-left"><!-- this area is image attributes -->
+        <div class="row">
+          <div class="col-sm-6">
+            <p>Catalog number: <?php echo $imageid.PHP_EOL; ?>
+              <br/>Dimensions: <?php echo $dimensions.PHP_EOL; ?>
+              <br/>File size: <?php echo $filesize.PHP_EOL; ?>
+            </p>
+          </div>
+          <div class="col-sm-4 text-right">
+            <!-- this area is for rhs navigation bar -->
+            <a href="#" onclick="window.history.back()">Back <span class="glyphicon glyphicon glyphicon-arrow-left"></span></a>
+            <br/><a href="<?php echo makeLinkTargetFromList('search.html', $searchKeys, $searchText); ?>">Refine results <span class="glyphicon glyphicon-search"></span></a>
+            <br/><a href="keywords.html">Keyword index <span class="glyphicon glyphicon-th-list"></span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+              <h4>Keywords</h4>
+              <?php showAllKeywordLists( $image_xmp['Hierarchical Keywords'] ); ?>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+</body>
+</html>

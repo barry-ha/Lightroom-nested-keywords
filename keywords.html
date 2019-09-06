@@ -1,0 +1,81 @@
+<?php
+// ----- begin edit -----
+$title = 'Keyword Index';
+// ----- end edit -----
+
+require('php/common.php');
+require_once('php/custom.php');
+require_once('php/keywords.php');  // for showSkipList() and more
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+</head>
+
+<body class="text-center">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once('php/sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+  <div class="container-fluid bg-3 text-center">
+    <div class="row">
+      <h1 id="header-text">
+	    <?php echo $title; ?> <span class="glyphicon glyphicon-tags"></span>
+      </h1>
+      <div class="skiplist">
+        Skip down to:<br/>
+<?php
+        require_once('php/keyword-database.php');
+        $keywordtree = readTreeDatabase($keywordTreeBasename);
+        showSkipList($keywordtree);
+?>
+      </div>
+      <p>The indented lists represent broader terms and narrower terms. 
+        Click on a keyword link to find all photos containing the keyword.
+        <br/>Click on a down-arrow (<span class="glyphicon glyphicon-chevron-down"></span>) to expand a list.</p>
+    </div><!-- end .row -->
+
+    <div class="row text-left keywordindex row-of-keys">
+      <!-- begin showTree() -->
+<?php
+      $keyword_to_files = readKeywordFlatDatabase($keywordFlatBasename);  // fetch "how many files are associated with each keyword"
+      sortKeywordTree($keywordtree);                     // sort in alphabetical order by name of keyword
+      echo showTree($keywordtree, $keyword_to_files);    // recursive routine to display entire keyword tree
+?>
+      <!-- end showTree() -->
+    </div><!-- end .row -->
+  </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+</body>
+</html>

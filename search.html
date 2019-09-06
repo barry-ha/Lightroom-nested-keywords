@@ -1,0 +1,194 @@
+<?php
+// ----- begin edit -----
+$title = 'Photo Finder';
+// ----- end edit -----
+
+require('php/common.php');
+require_once('php/custom.php');
+
+// ----- URL parameters -----
+$uKey = getCleanGET('key');
+$uKey1 = getCleanGET('key1', $uKey);  // synonym "key" and "key1"
+$uKey2 = getCleanGET('key2');
+$uKey3 = getCleanGET('key3');
+$uKey4 = getCleanGET('key4');
+
+// fix double quotes, which somehow somewhere arrive escaped, which later causes problems to our Search function
+// if a URL contains ?text="ronald+school"
+// then we receive   text=\"ronald+school\"
+// so this code removes the backslash
+$searchText = getCleanGET('text');
+$searchText = str_replace( '\"', '"', $searchText);
+
+$searchKeys = array();
+if (!empty($uKey1)) { $searchKeys[1] = ucfirst($uKey1); }
+if (!empty($uKey2)) { $searchKeys[2] = ucfirst($uKey2); }
+if (!empty($uKey3)) { $searchKeys[3] = ucfirst($uKey3); }
+if (!empty($uKey4)) { $searchKeys[4] = ucfirst($uKey4); }
+
+// if we have no text nor keywords to search for, then simplify the output page 
+$isEmptySearch = empty($searchKeys) && empty($searchText);
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+
+    <!-- required for "auto-complete" entry fields -->
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        div.title { display: block; color: #000080; }
+        div.caption { display: block; }
+    </style>
+</head>
+
+<body class="text-left">
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php require_once($path2php.'sitenav.html'); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- search form -->
+    <div class="container-fluid bg-3">
+        <div class="row">
+            <div class="col-sm-10">
+                <h1>
+                    <?php echo $title; ?> <span class="glyphicon glyphicon-search"></span>
+                </h1>
+            </div>
+            <div class="col-sm-2 text-right">
+                <!-- this area is for rhs navigation -->
+                <a href="#" onclick="window.history.back()">Back <span class="glyphicon glyphicon glyphicon-arrow-left"></span></a>
+                <br/><a href="<?php echo makeLinkTargetFromList($searchPage, '', ''); ?>">Reset Search <span class="glyphicon glyphicon-search"></span></a>
+                <br/><a href="keywords.html">Keyword index <span class="glyphicon glyphicon-th-list"></span></a>
+            </div>
+        </div><!-- end .row -->
+        <form action="<?php echo $resultPage.$resultsAnchorTag; ?>" method="GET">
+<?php
+ /*
+  * There are many plug-ins for "autocomplete" that could be used here.
+  * We chose this one because it finds fragments anywhere inside each keyword.
+  * Source: http://api.jqueryui.com/autocomplete/#entry-examples
+  * header requires: <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js">
+  * header requires: <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  * footer requires: <script>$( ".autocomplete" ).autocomplete(...);
+  */ ?>
+            <div class="row form-group">
+                <div class="col-sm-2">
+                    <label for="text">Search for text:</label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="text" name="text" 
+                            placeholder="Type a name, catalog number or partial words..."
+                            value="<?php echo htmlspecialchars( $searchText ); ?>" />
+                </div>
+            </div><!-- end .row for text field -->
+            <div class="row">
+                <div class="form-group col-sm-2">
+                <label for="key1">Search for keywords:</label>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control autocomplete" id="key1" name="key1" 
+                        placeholder="Start typing first keyword..."
+                        value="<?php echo $searchKeys[1] ?>" />
+                    <input type="text" class="form-control autocomplete" id="key2" name="key2" 
+                        placeholder="Start typing second keyword..."
+                        value="<?php echo $searchKeys[2] ?>" />
+                    <input type="text" class="form-control autocomplete" id="key3" name="key3" 
+                        placeholder="Start typing third keyword..."
+                        value="<?php echo $searchKeys[3] ?>" />
+                </div>
+            </div><!-- end .row for keyword fields -->
+            <br />
+            <div class="row">
+                <div class="col-sm-3 text-right">
+                </div>
+                <div class="col-sm-5 text-left">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn" style="margin-left: 2em;">Reset</button>
+                </div>
+            </div><!-- end .row of buttons -->
+        </form>
+        <br/>
+
+<?php 
+    if ($isEmptySearch) {
+        echo "<!-- Empty search. Type keywords and/or text above, click Submit and results will be shown here. -->".PHP_EOL;
+    } else {
+        echo '<div id="results" class="row text-center">'.PHP_EOL;
+        require_once('php/keywords.php');
+        require_once('php/search.php');
+
+        //$cwd = getcwd(); echo "<br/>cwd = $cwd".PHP_EOL;  // debug
+        //showFencepost(__FILE__, __LINE__);         // debug
+        require_once('php/keyword-database.php');
+        $keyword_to_files = readKeywordFlatDatabase( $keywordFlatBasename );  // first,  get the keyword-to-filename database
+        
+        require_once('php/image-database.php');
+        $files_to_titles = readImageDatabase( $imageDatabaseBasename );       // second, get information for all images
+
+        $filenames = searchForKeywords( $searchKeys, $keyword_to_files );     // third, find images for keywords
+
+        // fourth, find text. This is AFTER searching by keywords, because keywords are fast and this linear search is slow.
+        $filenames = searchForText( $searchText, $filenames, $files_to_titles );    //fourth, find text
+
+        $imageList = lookupTitleCaption( $filenames, $files_to_titles );      // fifth, get Title and Caption
+        $numberFound = sizeof($imageList);
+?>
+            <div class="col-sm-10">
+                <h2><?php echo number_format($numberFound); ?> Photo<?php if ($numberFound>1) {echo 's';} ?> Found</h2>
+            </div>
+            <div class="col-sm-12">
+            <!-- summary of search terms -->
+            <div class="row search-results">
+                <div class="col-sm-10">
+<?php 
+                    showKeywordSearchList($searchKeys);
+                    showTextSearchList($searchText); 
+?>
+                </div>
+            </div>
+            <div class="row mycontent">
+<?php showSearchResultThumbnails( $imageList, '', $searchKeys, $searchText );   // sixth,  show them ?>
+            </div><!-- end .row .mycontent -->
+        </div>
+        </div><!-- end .row of search results section -->
+
+<?php 
+        } // end "if empty search"
+?>
+    </div><!-- end .container-fluid for body content -->
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+    <script src="js/autocomplete-keyword.js"></script>
+</body>
+</html>
