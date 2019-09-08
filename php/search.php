@@ -23,14 +23,15 @@ function searchForKeywords($searchKeys, $flat_keyword_database) {
         // We already have a table that tells us all the files for each keyword
         // so let PHP array processing do all of the work to look them up
         foreach ($searchKeys as $keyword) {
+            $keyword = trim($keyword);
             if (array_key_exists($keyword, $flat_keyword_database)) {
                 $foundFiles = $flat_keyword_database[$keyword];
                 $imageList = array_intersect( $imageList, $foundFiles );
                 //debugDump( $imageList, __FILE__, __LINE__, 'searchForKeywords() found something, the result is', '$imageList'); // debug
             } else {
-                showError("Keyword '<b>$keyword</b>' is not in our database. "
-                          ."Please check for upper/lower case and exact spelling. "
-                          ."'<b>$keyword</b>' is ignored for this search.",
+                showError("Keyword '<b>$keyword</b>' is not in our list of keywords. "
+                        ."Please check for upper/lower case and exact spelling. "
+                        ."'<b>$keyword</b>' is ignored for this search.",
                         __FILE__, __LINE__);
             }
         }
