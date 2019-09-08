@@ -21,10 +21,10 @@ $searchText = getCleanGET('text');
 $searchText = str_replace( '\"', '"', $searchText);
 
 $searchKeys = array();
-if (!empty($uKey1)) { $searchKeys[1] = ucfirst($uKey1); }
-if (!empty($uKey2)) { $searchKeys[2] = ucfirst($uKey2); }
-if (!empty($uKey3)) { $searchKeys[3] = ucfirst($uKey3); }
-if (!empty($uKey4)) { $searchKeys[4] = ucfirst($uKey4); }
+if (!empty(trim($uKey1))) { $searchKeys[1] = ucfirst(trim($uKey1)); }
+if (!empty(trim($uKey2))) { $searchKeys[2] = ucfirst(trim($uKey2)); }
+if (!empty(trim($uKey3))) { $searchKeys[3] = ucfirst(trim($uKey3)); }
+if (!empty(trim($uKey4))) { $searchKeys[4] = ucfirst(trim($uKey4)); }
 
 // if we have no text nor keywords to search for, then simplify the output page 
 $isEmptySearch = empty($searchKeys) && empty($searchText);
@@ -117,13 +117,13 @@ $isEmptySearch = empty($searchKeys) && empty($searchText);
                 <div class="col-sm-7">
                     <input type="text" class="form-control autocomplete" id="key1" name="key1" 
                         placeholder="Start typing first keyword..."
-                        value="<?php echo $searchKeys[1] ?>" />
+                        value="<?php if (array_key_exists(1, $searchKeys)) { echo $searchKeys[1]; } ?>" />
                     <input type="text" class="form-control autocomplete" id="key2" name="key2" 
                         placeholder="Start typing second keyword..."
-                        value="<?php echo $searchKeys[2] ?>" />
+                        value="<?php if (array_key_exists(2, $searchKeys)) { echo $searchKeys[2]; } ?>" />
                     <input type="text" class="form-control autocomplete" id="key3" name="key3" 
                         placeholder="Start typing third keyword..."
-                        value="<?php echo $searchKeys[3] ?>" />
+                        value="<?php if (array_key_exists(3, $searchKeys)) { echo $searchKeys[3]; } ?>" />
                 </div>
             </div><!-- end .row for keyword fields -->
             <br />
