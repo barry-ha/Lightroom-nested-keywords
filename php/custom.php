@@ -16,13 +16,14 @@ $myOwnerName = 'Barry Hansen';         // site owner's name
 $myWebmasterEmail = 'barry@electromagneticsoftware.com';  // email address to notify when things break
 
 // image folder names
-// Note:  Use names relative to site root. Individual PHP files must add relative paths as needed.
-//        If you move PHP source to a new folder, you must manually adjust the new relative path.
+// Note: Use names relative to site root. 
+//       Individual PHP files must add relative paths as needed.
+//       If you move PHP source to a new folder, you must manually adjust the new relative path.
 $myLargeImageFolder = 'photos/large';   // folder with all the images that contain hierarchical keywords
 $mySmallImageFolder = 'photos/small';   // folder with matching thumbnail images
 $supportedFileExtensions = array('jpg', 'png', 'gif', 'jpeg'); // use lowercase here
 
-// database file names
+// data file names
 $imageDatabaseBasename = 'xml/image-db';             // filename containing our Image database (file extension added later)
 $keywordTreeBasename   = 'xml/keyword-tree-db';      // filename of hierarchical keyword database (extension added later)
 $keywordFlatBasename   = 'xml/keyword-flat-db';      // filename of flat keyword->files database (extension added later)
@@ -37,15 +38,32 @@ $resultPage = 'search.html';     // URL to show list of search results (currentl
 $resultsAnchorTag = '#results';  // use this at the end of URLs to position browser at the search results
 $detailPage = 'detail.html';     // URL to show one photo's details
 
-// Pre-defined keywords
-$noKeywordsKeyset = array('Attributes|Metadata|No keywords');
+// pre-defined keywords
+$noKeywordsKeyset = array('Attributes|Metadata|No keywords');  // auto applied to images that have no keywords
 
 // debugging
 $loopLimit = 0;          // debug, set to 0 to disable the limit
 $levelLimit = 0;         // debug, set to 0 to disable the limit
 $indent = '          ';  // help format generated HTML
 
-// ----- helpers --------------------------------------------------------
+// ----------------------------------------------------------------------
+function showNavBar() {
+?>
+    <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav" id="main-nav">
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li><a href="/search.html">Photo Finder</a></li>
+                <li><a href="/browse.html">Browse Images</a></li>
+                <li><a href="/keywords.html">Keyword Index</a></li>
+                <li><a href="/admin/build-keyword-database.html">Build Keyword Database</a></li>
+                <li><a href="/admin/spreadsheet.html">Spreadsheet</a></li>
+            </ul>
+        </div>
+    </nav>
+<?php
+}
+// ----------------------------------------------------------------------
 function showFooter() {
     ?>
         <address>
