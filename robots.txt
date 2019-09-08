@@ -1,0 +1,7 @@
+# Robots.txt file - Please do NOT index anything on the test server
+User-agent: *
+Disallow: /
+
+# Permit W3C tools to verify links
+User-Agent: W3C-checklink
+Disallow:
