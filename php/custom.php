@@ -68,7 +68,8 @@ function showFooter() {
     ?>
         <address>
             <b>www.NestedKeywords.com</b> 
-            <br/>GitHub project barry-ha/Lightroom-Nested-Keywords
+            <br/>GitHub 
+            <a href="https://github.com/barry-ha/Lightroom-nested-keywords">barry-ha/Lightroom-Nested-Keywords</a>
         </address>
     <?php 
 }
