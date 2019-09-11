@@ -45,6 +45,7 @@ For example, the titles and captions and keywords *could* have been written by
 * Extract these files into a folder for your web server
 * Configure your web server for your website
 * Modify `php/custom.php` to match your website's domain name
+* Detailed instructions are in docs/USERS-GUIDE.md
 
 ## Usage
 
