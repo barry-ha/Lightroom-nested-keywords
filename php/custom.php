@@ -5,7 +5,7 @@
 // Please use PHP best practices for Github:
 //      https://odan.github.io/2018/04/05/php-best-practices.html
 
-$mySiteUpdate = 'September 3, 2019';
+$mySiteUpdate = 'September 12, 2019';
 
 $mySubdomain = '';
 $myDomain = 'nestedkeywords';
@@ -56,12 +56,22 @@ function showNavBar() {
                 <li><a href="/search.html">Photo Finder</a></li>
                 <li><a href="/browse.html">Browse Images</a></li>
                 <li><a href="/keywords.html">Keyword Index</a></li>
-                <li><a href="/admin/build-keyword-database.html">Build Keyword Database</a></li>
-                <li><a href="/admin/spreadsheet.html">Spreadsheet</a></li>
             </ul>
         </div>
     </nav>
 <?php
+}
+// ----------------------------------------------------------------------
+function showAdminNavBar() {
+?>
+    <nav id="navigation" class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav" id="main-nav">
+                <li><a href="/index.html">Return to Photo Gallery</a></li>
+            </ul>
+        </div>
+    </nav>
+<?php 
 }
 // ----------------------------------------------------------------------
 function showFooter() {

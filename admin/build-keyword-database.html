@@ -37,7 +37,7 @@ require_once('../php/custom.php');
         </h1>
     </div>
 
-<?php showNavBar(); ?>
+<?php showAdminNavBar(); ?>
 
     <div class="row">
         <nav aria-label="breadcrumb">
@@ -49,6 +49,7 @@ require_once('../php/custom.php');
         </nav>
     </div>
 
+    <!-- main content -->
     <div class="container-fluid bg-3 text-left">
         <h1 id="header-text">
 		  <?php echo $title; ?></h1>
@@ -59,8 +60,8 @@ require_once('../php/custom.php');
           <br/><a href="#keyword_tree">Keyword Tree</a>
           <br/><a href="#autocomplete">Autocomplete List</a>
       </div>
-        <p><b>Webmaster:</b> This is an administrative function and should be hidden from the 
-            public. For example, you might password-protect the "admin" folder.</p>
+        <p><b>Webmaster:</b> This is an administrative function that is normally hidden from the 
+            public. For example, you might want to password-protect access to this "admin" folder.</p>
         <p><b>Archivist:</b> Examine this page to confirm that your keywords
             were recognized as expected, and look for warnings and error messages.</p>
         <p>This page scans all the image files, extracts the hierarchical keywords

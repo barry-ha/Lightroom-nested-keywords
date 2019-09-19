@@ -1,0 +1,76 @@
+<?php
+// ----- begin edit -----
+$title = 'Administrators';
+// ----- end edit -----
+
+require('../php/common.php');
+require_once('../php/custom.php');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo $title; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $title; ?>">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <style>
+        button { padding: 10px 14px; font-size: 110%; margin-bottom: 8px; color: black; background-color: rgb(253, 224, 150); min-width: 14em; }
+    </style>
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        <h1>
+            <a href="http://nestedkeywords.com/">
+                Lightroom-nested-keywords
+            </a>
+        </h1>
+    </div>
+
+<?php showAdminNavBar(); ?>
+
+    <div class="row">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li>You are here: <a href="/index.html">Home</a></li>
+                <li><a href="/index.html">Photo Gallery</a></li>
+                <li aria-current="page"><?php echo $title; ?></li>
+            </ol>
+        </nav>
+    </div>
+
+    <!-- main content -->
+    <div class="container-fluid bg-3 text-left">
+        <h1 id="header-text">
+            <?php echo $title; ?> <span class="glyphicon glyphicon-picture"></span>
+        </h1>
+        <p>This is area is for Administrators and would typically be restricted from public access.</p>
+        <form method="get" action="https://github.com/barry-ha/Lightroom-nested-keywords/blob/master/docs/USERS-GUIDE.mdf">
+            <button>User's Guide <img src="/img/GitHub-Mark-32px.png" alt="PDF" width="20" height="20"/></button> 
+            User's Guide for archivists and webmasters.
+        </form>
+        <form method="get" action="spreadsheet.html">
+            <button>Summary Spreadsheet <img src="/img/icon-csv.gif" alt="CSV"/></button> 
+            Generate CSV spreadsheet listing all images.
+        </form>
+        <form method="get" action="title-caption.html">
+            <button>Titles &amp; Captions <img src="/img/icon-csv.gif" alt="CSV"/></button> 
+            Generate CSV spreadsheet for old/new titles and captions.
+        </form>
+        <form method="get" action="build-keyword-database.html">
+            <button>Build Keyword Database</button> Regenerate all cached data from image files.
+        </form>
+    </div>
+
+    <footer class="container-fluid text-center">
+<?php showFooter(); ?>
+    </footer>
+  </body>
+</html>

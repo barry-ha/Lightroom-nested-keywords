@@ -6,7 +6,6 @@ $title = 'Spreadsheet Summary';
 require('../php/common.php');
 require_once('../php/custom.php');
 require_once('../php/search.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +35,7 @@ require_once('../php/search.php');
         </h1>
     </div>
 
-<?php showNavBar(); ?>
+<?php showAdminNavBar(); ?>
 
     <div class="row">
         <nav aria-label="breadcrumb">
@@ -48,6 +47,7 @@ require_once('../php/search.php');
         </nav>
     </div>
 
+    <!-- main content -->
     <h1 id="top">Image Summary as a Spreadsheet</h1>
     <p>Provides the entire library in CSV (comma-separated variable) format.
         This is intended to help the archivist review all the titles and captions
@@ -166,5 +166,5 @@ require_once('../php/search.php');
     <footer class="container-fluid text-center">
 <?php showFooter(); ?>
     </footer>
-</body>
+  </body>
 </html>
