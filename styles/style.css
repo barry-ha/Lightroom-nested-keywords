@@ -44,6 +44,10 @@ body
     color: black !important;
     background-color: #f1d7ae !important;
 }
+/* nav bar has a link to the Administrator's page (normally not offered to public view) */
+.admin { padding-left: 4em; }
+.admin a:link { color: #aaa !important; }
+.admin a:visited { color: #aaa !important; }
 
 /* ---------- body ---------- */
 h4 {

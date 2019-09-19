@@ -56,6 +56,7 @@ function showNavBar() {
                 <li><a href="/search.html">Photo Finder</a></li>
                 <li><a href="/browse.html">Browse Images</a></li>
                 <li><a href="/keywords.html">Keyword Index</a></li>
+                <li class="admin"><a href="/admin/index.html">Admin</a></li>
             </ul>
         </div>
     </nav>
