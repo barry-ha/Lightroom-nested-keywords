@@ -49,7 +49,7 @@ require_once('../php/custom.php');
     <!-- main content -->
     <div class="container-fluid bg-3 text-left">
         <h1 id="header-text">
-            <?php echo $title; ?> <span class="glyphicon glyphicon-picture"></span>
+            <?php echo $title; ?> <span class="glyphicon glyphicon-cog"></span>
         </h1>
         <p>This is area is for Administrators and would typically be restricted from public access.</p>
         <form method="get" action="https://github.com/barry-ha/Lightroom-nested-keywords/blob/master/docs/USERS-GUIDE.md">
@@ -57,15 +57,16 @@ require_once('../php/custom.php');
             User's Guide for archivists and webmasters.
         </form>
         <form method="get" action="spreadsheet.html">
-            <button>Summary Spreadsheet <img src="/img/icon-csv.gif" alt="CSV"/></button> 
+            <button>Summary Spreadsheet <span class="glyphicon glyphicon-list-alt"></span></button> 
             Generate CSV spreadsheet listing all images.
         </form>
         <form method="get" action="title-caption.html">
-            <button>Titles &amp; Captions <img src="/img/icon-csv.gif" alt="CSV"/></button> 
+            <button>Titles &amp; Captions <span class="glyphicon glyphicon-list-alt"></span></button> 
             Generate CSV spreadsheet for old/new titles and captions.
         </form>
         <form method="get" action="build-keyword-database.html">
-            <button>Build Keyword Database</button> Regenerate all cached data from image files.
+            <button>Build Keyword Database <span class="glyphicon glyphicon-wrench"></span></button> 
+            Refresh all cached data from image files.
         </form>
     </div>
 
