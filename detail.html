@@ -53,8 +53,8 @@ if (!file_exists($fqname)) {
     <link rel="stylesheet" href="/styles/style.css" />
     <style>
         .common-page-title { display: none; /* hidden - the image's title line should be the visual focus */ }
-        ul.pager { display: none; /* hidden -  prev/next pagination is not implemented as of 8-25-2019 */ }
-        p.sequencer { display: none; /* hidden - not implemented as of 8-25-2019 */ }
+        ul.pager { display: none; /* hidden -  prev/next pagination is not implemented as of 9-21-2019 */ }
+        p.sequencer { display: none; /* hidden - not implemented as of 9-21-2019 */ }
     </style>
 </head>
 
@@ -102,6 +102,9 @@ if (!file_exists($fqname)) {
 
     $imageKeywords = getImageMetadata($fqname);
 
+    $prevpage = '#';    // TODO - not implemented as of 9-21-2019
+    $nextpage = '#';    // TODO - not implemented as of 9-21-2019
+
     require_once($path2php.'adobe-xmp-for-php.php');
     $adobePHP =& adobeXMPforPHP::get_instance();
     $image_xmp = $adobePHP->get_xmp( $fqname );
@@ -111,7 +114,7 @@ if (!file_exists($fqname)) {
 ?>
     <h2 class="common-page-title">Photo detail for <?php echo $filename; ?></h2>
     <h3><?php echo $title; ?></h3>
-    <?php if (!empty($caption) && ($caption != NO_CAPTION)) { echo "<p>$caption</p>".PHP_EOL; } ?>
+    <?php if (!empty($caption)) { echo "<p>$caption</p>".PHP_EOL; } ?>
     <div class="row">
       <div class="col-sm-5">
         <a href="photos/large/<?php echo $urlFilename; ?>">
