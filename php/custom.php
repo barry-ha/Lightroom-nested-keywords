@@ -5,7 +5,7 @@
 // Please use PHP best practices for Github:
 //      https://odan.github.io/2018/04/05/php-best-practices.html
 
-$mySiteUpdate = 'September 12, 2019';
+$mySiteUpdate = 'September 20, 2019';
 
 $mySubdomain = '';
 $myDomain = 'nestedkeywords';
