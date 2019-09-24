@@ -24,12 +24,6 @@ A well-chosen tree structure (taxonomy, or controlled vocabulary) along with con
 * JavaScript – Auto-complete fields
 * XML – Server-side data storage. (We do not use MySQL or other databases.)
 
-## Acknowledgments
-
-* Adobe XMP / IPTC for WordPress by JS Morisset, https://wordpress.org/plugins/adobe-xmp-for-wp/  
-* PHP Adobe XMP Reader by Cobraz, https://github.com/cobraz/xmp
-* Simplicity for Lightroom by Andrew Briggs, https://github.com/brggs/Simplicity-for-Lightroom
-
 ## License
 
 `barry-ha\Lightroom-nested-keywords` is subject to Gnu GPL v3 license.
@@ -405,6 +399,8 @@ When Lightroom saves hierarchical keywording to an image, it writes a list of al
 ### Keyword Hierarchy Example
 
 Here is an early keyword hierarchy of the Shoreline Historical Museum. For brevity, only the top few levels are shown.
+
+Credit goes to Ken Winnick, Visual Cognetics, for the keyword taxonomy.
 
 This example is documented here as an example of a reasonably good controlled vocabulary for a museum's digital collection. Please visit the public production website at photos.shorelinehistoricalmuseum.org/keywords.html to view the ‘live’ keyword tree.
 
