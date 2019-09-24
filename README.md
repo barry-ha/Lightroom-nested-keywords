@@ -71,8 +71,6 @@ For example, the titles and captions and keywords *could* have been written by
 `barry-ha\Lightroom-nested-keywords` is under Gnu GPL v3 license.
 Please read the LICENSE file for further details.
 
-NOTE: NOTE: The test images contained within are not my work.  
+NOTE: The test images contained within are not my work.  
 DO NOT REDISTRIBUTE OR USE THESE IMAGES OUTSIDE THE DEMO.
-If you are the owner of the images contained within, let me
-know so I can properly credit you or remove the images at
-your request.
+These images are used by permission of Shoreline Historical Museum for the purpose of demonstration. Please contact shm@shorelinehistoricalmuseum.org for more information.
