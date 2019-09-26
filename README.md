@@ -61,7 +61,7 @@ For example, the titles and captions and keywords *could* have been written by
 
 ## Acknowledgments
 
-* Ken Winnick, Visual Cognetics, https://github.com/visualcognetics, for designing the taxonomy / controlled vocabulary / structured keywords suitable for our museum's digital photo collection. Also for designing a Photo Mechanic strategy and work flow that enabled a team of volunteers to work in parallel to apply keywords to thousands of photos, and then leading the team to successful completion.
+* Ken Winnick, Visual Cognetics, https://github.com/visualcognetics, visualcognetics@outlook.com, www.visualcognetics.com, for designing the taxonomy / controlled vocabulary / structured keywords suitable for our museum's digital photo collection. Also for developing a Photo Mechanic strategy and work flow that enabled a team of volunteers to work in parallel to apply keywords to thousands of photos, and then leading the team to successful completion.
 * Adobe XMP / IPTC for WordPress by JS Morisset, https://wordpress.org/plugins/adobe-xmp-for-wp/  
 * PHP Adobe XMP Reader by Cobraz, https://github.com/cobraz/xmp
 * Simplicity for Lightroom by Andrew Briggs, https://github.com/brggs/Simplicity-for-Lightroom
