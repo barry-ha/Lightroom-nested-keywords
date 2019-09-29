@@ -1,10 +1,8 @@
 /* File:    style.css
  * Website: www.NestedKeywords.com 
- * Author:  Barry Hansen, barry@electromagneticsoftware.com
- * Written: September 5, 2019
+ * Author:  Barry Hansen, barry.hansen@gmail.com
  */
-body
-{
+body {
     padding: 20px 40px;
     overflow-y: scroll;
 }
@@ -44,8 +42,9 @@ body
     color: black !important;
     background-color: #f1d7ae !important;
 }
-/* nav bar has a link to the Administrator's page (normally not offered to public view) */
-.admin { padding-left: 4em; }
+/* nav bar has a link to the Administrator's page
+ * in a production environment you'd probably not offer it to public view
+ */
 .admin a:link { color: #aaa !important; }
 .admin a:visited { color: #aaa !important; }
 

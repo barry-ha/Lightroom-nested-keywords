@@ -48,19 +48,7 @@ $indent = '          ';  // help format generated HTML
 
 // ----------------------------------------------------------------------
 function showNavBar() {
-?>
-    <nav id="navigation" class="navbar navbar-default">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav" id="main-nav">
-                <li><a href="/index.html">Photo Gallery</a></li>
-                <li><a href="/search.html">Photo Finder</a></li>
-                <li><a href="/browse.html">Browse Images</a></li>
-                <li><a href="/keywords.html">Keyword Index</a></li>
-                <li class="admin"><a href="/admin/index.html">Admin</a></li>
-            </ul>
-        </div>
-    </nav>
-<?php
+    require($path2php.'sitenav.html');
 }
 // ----------------------------------------------------------------------
 function showAdminNavBar() {
