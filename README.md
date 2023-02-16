@@ -5,20 +5,13 @@ This is written in HTML5, CSS3, PHP and based on the Bootstrap framework.
 
 ## Background
 
-Lightroom is a wonderful organizing tool for very large groups of photos.
-It can easily handle many thousands of images and offers several great
-ways to quickly find them. An especially good method is to tag images
-with keywords. You can organize keywords into a tree structure (hierarchies)
-to represent, for example, countries -> states -> cities -> neighborhoods.
+Lightroom is a wonderful organizing tool for very large groups of photos. It can easily handle many thousands of images and offers several great ways to quickly find them. An especially good method is to tag images with keywords. You can organize keywords into a tree structure (hierarchies) to represent, for example, countries -> states -> cities -> neighborhoods.
 
-However, a limitation of Lightroom is its organizational schemes only work
-on single workstation. Although Lightroom can publish to the web, and it
-can embed keywords in metadata, the end result does not have any features
-to navigate by keyword. This project intends to fill that need.
+However, a limitation of Lightroom is its organizational schemes only work on the single workstation running Lightroom. Although Lightroom can publish to the web, and it can embed keywords in metadata, the end result does not have any features to navigate by keyword. This project intends to fill that need.
 
-A well-chosen tree structure (taxonomy, or controlled vocabulary) along
-with consistently applying these keywords will be tremendously helpful
-to visitors on the world wide web.
+A well-chosen tree structure (taxonomy, or controlled vocabulary) along with consistently applying these keywords will be tremendously helpful to visitors on the world wide web.
+
+We built this project for [Shoreline Historical Museum](http://photos.shorelinehistoricalmuseum.org/photo-gallery.html) under guidance from [Visual Cognetics](https://visualcognetics.com/photo-archive-deep-search-system-shoreline-historical-musem).
 
 **Lightroom-nested-keywords** provides PHP functions to process embedded metadata, and an example website to display and navigate images by keyword.
 
